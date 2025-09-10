@@ -1,6 +1,6 @@
 // src/HomeApp.js
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, Pressable, StyleSheet, TouchableOpacity, Alert, StatusBar, SafeAreaView } from "react-native";
 import { NavigationContainer, DefaultTheme, useIsFocused } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -15,6 +15,8 @@ import AssistantIAScreen from "./AssistantIAScreen";
 import AssistantIAWelcomeScreen from "./AssistantIAWelcomeScreen"; 
 import LoginScreen from "./LoginScreen";
 import RegisterScreen from "./RegisterScreen";
+import ProfileScreen from "./ProfileScreen";
+import AuthWrapper from "./AuthWrapper";
 
 const Colors = {
   green: "#1E5B3F",
@@ -59,14 +61,16 @@ function HomeMenu({ navigation }) {
   }, [isFocused]);
 
   return (
-    <View style={[styles.screen, { backgroundColor: Colors.beige }]}>
-      <View style={styles.topGreen}>
-        <View style={styles.chipsRow}>
-          <StatChip title="Cerdos totales" value={String(herd)} />
-          <StatChip title="Productividad" value="85%" />
-          <StatChip title="Madres" value="120" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.beige }}>
+      <StatusBar barStyle="light-content" backgroundColor={Colors.green} />
+      <View style={[styles.screen, { backgroundColor: Colors.beige }]}>
+        <View style={styles.topGreen}>
+          <View style={styles.chipsRow}>
+            <StatChip title="Cerdos totales" value={String(herd)} />
+            <StatChip title="Productividad" value="85%" />
+            <StatChip title="Madres" value="120" />
+          </View>
         </View>
-      </View>
 
       <View style={styles.grid}>
         {/* Dashboard */}
@@ -114,11 +118,12 @@ function HomeMenu({ navigation }) {
         </Pressable>
       </View>
 
-      {/* Botón Asistente IA */}
-      <Pressable style={styles.aiBtn} onPress={() => navigation.navigate("AsistenteIAWelcome")}>
-        <Text style={styles.aiBtnText}>Asistente IA</Text>
-      </Pressable>
-    </View>
+        {/* Botón Asistente IA */}
+        <Pressable style={styles.aiBtn} onPress={() => navigation.navigate("AsistenteIAWelcome")}>
+          <Text style={styles.aiBtnText}>Asistente IA</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -126,7 +131,8 @@ function HomeMenu({ navigation }) {
 const Tab = createBottomTabNavigator();
 function Tabs() {
   return (
-    <Tab.Navigator
+    <AuthWrapper>
+      <Tab.Navigator
       initialRouteName="InicioTab"
       screenOptions={{
         headerShown: false,
@@ -190,19 +196,13 @@ function Tabs() {
             <MaterialCommunityIcons name="account-outline" size={size} color={color} />
           ),
         }}
-      />
-    </Tab.Navigator>
-  );
-}
+        />
+      </Tab.Navigator>
+    </AuthWrapper>
+    );
+  }
 
-/* ====== Perfil (placeholder) */
-function ProfileScreen() {
-  return (
-    <View style={[styles.screen, { alignItems: "center", justifyContent: "center", backgroundColor: Colors.beige }]}>
-      <Text style={{ color: Colors.muted }}>Perfil (próximamente)</Text>
-    </View>
-  );
-}
+/* ====== Perfil - Importado desde ProfileScreen.js */
 
 /* ====== Stack root ====== */
 const Stack = createNativeStackNavigator();
@@ -264,7 +264,7 @@ export default function HomeApp() {
 
 /* ====== Estilos ====== */
 const styles = StyleSheet.create({
-  screen: { flex: 1, padding: 16 },
+  screen: { flex: 1, padding: 16, paddingBottom: 100 },
 
   topGreen: {
     marginHorizontal: -16,
