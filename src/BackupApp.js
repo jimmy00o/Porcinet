@@ -1,5 +1,9 @@
 // src/BackupApp.js
 import React, { useEffect, useState, useCallback } from "react";
+
+// ⛔️ Eliminado: no se usa aquí y causaba error de ruta
+// import ProductivityDashboardScreen from "./screens/ProductivityDashboardScreen";
+
 import {
   View,
   Text,
@@ -47,7 +51,7 @@ function formatDateTime(d) {
 /* =======================
    Pantalla: Respaldos
 ======================= */
-function BackupScreen({ navigation }) {
+export function BackupScreen({ navigation }) {
   const [autoBackup, setAutoBackup] = useState(false);
   const [lastBackup, setLastBackup] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -74,7 +78,7 @@ function BackupScreen({ navigation }) {
     if (loading) return;
     setLoading(true);
 
-    // Simulación de respaldo (aquí luego conectas SQLite + Firebase)
+    // Simulación de respaldo
     setTimeout(async () => {
       const timestamp = new Date().toISOString();
 
@@ -151,7 +155,7 @@ function BackupScreen({ navigation }) {
 /* =======================
    Pantalla: Historial
 ======================= */
-function BackupHistoryScreen({ navigation }) {
+export function BackupHistoryScreen({ navigation }) {
   const [items, setItems] = useState([]);
 
   const loadHistory = useCallback(async () => {
@@ -189,7 +193,7 @@ function BackupHistoryScreen({ navigation }) {
 }
 
 /* =======================
-   Navegación y App
+   Navegación y App (opcional)
 ======================= */
 const Stack = createNativeStackNavigator();
 
@@ -267,11 +271,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0,0,0,0.05)",
   },
   rowLabel: { fontSize: 16, fontWeight: "600", color: Colors.text },
-  helper: {
-    marginTop: 10,
-    color: Colors.muted,
-    fontSize: 14,
-  },
+  helper: { marginTop: 10, color: Colors.muted, fontSize: 14 },
   helperBold: { color: Colors.text, fontWeight: "700" },
   primaryBtn: {
     marginTop: 18,
@@ -280,11 +280,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: "center",
   },
-  primaryBtnText: {
-    color: Colors.white,
-    fontWeight: "800",
-    fontSize: 16,
-  },
+  primaryBtnText: { color: Colors.white, fontWeight: "800", fontSize: 16 },
   outlineBtn: {
     marginTop: 10,
     paddingVertical: 14,
@@ -294,11 +290,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.outline,
     backgroundColor: "transparent",
   },
-  outlineBtnText: {
-    color: Colors.outline,
-    fontWeight: "800",
-    fontSize: 16,
-  },
+  outlineBtnText: { color: Colors.outline, fontWeight: "800", fontSize: 16 },
   empty: { color: Colors.muted, fontSize: 14 },
   historyItem: {
     flexDirection: "row",

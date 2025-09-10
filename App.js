@@ -1,7 +1,9 @@
 // App.js
+import "react-native-gesture-handler";
 import React from "react";
-import BackupApp from "./src/BackupApp";
+import HomeApp from "./src/HomeApp";
 
 export default function App() {
-  return <BackupApp />;
+  return <HomeApp />;
+  
 }
